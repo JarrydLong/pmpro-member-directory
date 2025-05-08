@@ -257,7 +257,16 @@ add_filter( 'the_title', 'pmpromd_the_title_profile_page', 10, 2 );
  * Update the document title parts for the Profile page.
  */
 function pmpromd_document_title_parts( $title_parts ) {
-	global $main_post_id, $post;
+	global $main_post_id, $post, $pmpro_pages;
+
+    //make sure we're on the Profile page before changing the title
+    if( empty( $pmpro_pages['profile'] ) ) {
+        return $title_parts;
+    }
+
+    if( ! is_page( $pmpro_pages['profile'] ) ){
+        return $title_parts;
+    }
 
 	if ( isset( $post->ID ) && $post->ID == $main_post_id ) {
 
